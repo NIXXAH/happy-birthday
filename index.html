@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Niña ♡</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Georgia, "Times New Roman", serif;
+        background: #0d0b12;
+        color: #f5edf2;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(255, 150, 190, 0.12), transparent 30%),
+            radial-gradient(circle at 80% 70%, rgba(170, 130, 255, 0.10), transparent 30%);
+        pointer-events: none;
+        z-index: -2;
+    }
+
+    .stars {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+    }
+
+    .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.6;
+        animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+        0%, 100% {
+            opacity: 0.15;
+        }
+
+        50% {
+            opacity: 0.8;
+        }
+    }
+
+    /* OPENING */
+
+    .opening {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 30px;
+        position: relative;
+    }
+
+    .opening-content {
+        max-width: 600px;
+        animation: appear 1.8s ease;
+    }
+
+    .tiny {
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: #c9a9b8;
+        margin-bottom: 25px;
+    }
+
+    h1 {
+        font-size: clamp(48px, 13vw, 90px);
+        font-weight: normal;
+        line-height: 0.95;
+        margin-bottom: 25px;
+    }
+
+    .heart {
+        color: #f09ab8;
+        display: inline-block;
+        animation: heartbeat 1.7s infinite;
+    }
+
+    @keyframes heartbeat {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        15% {
+            transform: scale(1.12);
+        }
+
+        30% {
+            transform: scale(1);
+        }
+    }
+
+    .opening p {
+        font-family: Arial, sans-serif;
+        color: #b9adb4;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .scroll {
+        margin-top: 55px;
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: #8e8189;
+        animation: float 2s infinite ease-in-out;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(7px);
+        }
+    }
+
+    /* SECTIONS */
+
+    section {
+        min-height: 100vh;
+        padding: 90px 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 720px;
+    }
+
+    .label {
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #c493a9;
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-size: clamp(35px, 9vw, 60px);
+        font-weight: normal;
+        margin-bottom: 35px;
+        line-height: 1;
+    }
+
+    /* LETTER */
+
+    .letter {
+        background: rgba(255,255,255,0.035);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 30px 24px;
+        box-shadow: 0 20px 80px rgba(0,0,0,0.25);
+    }
+
+    .letter p {
+        font-size: 17px;
+        line-height: 1.9;
+        color: #e8dfe4;
+        margin-bottom: 22px;
+    }
+
+    .letter p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* FINAL */
+
+    .final {
+        text-align: center;
+    }
+
+    .final h2 {
+        font-size: clamp(42px, 11vw, 75px);
+        font-weight: normal;
+        line-height: 1;
+        margin-bottom: 30px;
+    }
+
+    .final p {
+        color: #bdb0b7;
+        font-family: Arial, sans-serif;
+        line-height: 1.8;
+        font-size: 14px;
+    }
+
+    .signature {
+        margin-top: 50px;
+        font-size: 22px;
+        color: #e8b0c4;
+    }
+
+    /* REVEAL ANIMATION */
+
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 1s ease;
+    }
+
+    .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 500px) {
+        section {
+            padding: 75px 20px;
+        }
+
+        .letter {
+            padding: 25px 20px;
+        }
+
+        .letter p {
+            font-size: 16px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND STARS -->
+<div class="stars"></div>
+
+
+<!-- OPENING -->
+<section class="opening">
+
+    <div class="opening-content">
+
+        <div class="tiny">
+            a little something for you
+        </div>
+
+        <h1>
+            Happy<br>
+            Birthday <span class="heart">♡</span>
+        </h1>
+
+        <p>
+            To someone who deserves more than<br>
+            just a simple "happy birthday."
+        </p>
+
+        <div class="scroll">
+            ↓ &nbsp; scroll down &nbsp; ↓
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LETTER -->
+<section>
+
+    <div class="container reveal">
+
+        <div class="label">
+            September 30, 2026
+        </div>
+
+        <div class="section-title">
+            Happy birthday,<br>
+            <em>Niña.</em>
+        </div>
+
+        <div class="letter">
+
+            <p>
+                Happy birthday my dear Niña, today marks the day you turn 16, which means you're the same age as me until November woo, i just wanted to say that i wish and hope that this year will be a wonderful and the best year you've had in your life.
+            </p>
+
+            <p>
+                Reuniting with you after 3 years were a dream come true. I've never stopped loving you since the first time we got together back in 2021 and i will always keep loving you forever until the last of my breath.
+            </p>
+
+            <p>
+                I never expected that we've known each others for like 5 years and I hope meeting me has made your life better or at least give a bit of positiveness in it because i really wish i can celebrate this in front of you, but i guess its not the time yet loll, but i gue this is what i can do for now, and there will be few surprises laterrr.
+            </p>
+
+            <p>
+                Sooo happy birthday Niña, my dear girlfriend❤️
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FINAL -->
+<section>
+
+    <div class="container final reveal">
+
+        <div class="label">
+            one last thing
+        </div>
+
+        <h2>
+            Happy birthday,<br>
+            Niña ♡
+        </h2>
+
+        <p>
+            I hope this little page<br>
+            gives you a reason to smile.
+        </p>
+
+        <div class="signature">
+            — Your favorite person ♡
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    /* CREATE STARS */
+
+    const stars = document.querySelector(".stars");
+
+    for (let i = 0; i < 80; i++) {
+
+        const star = document.createElement("div");
+
+        star.className = "star";
+
+        star.style.left = Math.random() * 100 + "%";
+        star.style.top = Math.random() * 100 + "%";
+
+        star.style.animationDelay =
+            Math.random() * 3 + "s";
+
+        stars.appendChild(star);
+    }
+
+
+    /* SCROLL REVEAL */
+
+    const reveals = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.15
+        }
+    );
+
+    reveals.forEach(element => {
+        observer.observe(element);
+    });
+
+</script>
+
+</body>
+</html>
