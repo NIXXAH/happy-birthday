@@ -46,11 +46,25 @@ button,input{font:inherit}
 .error{color:#ff9eae}
 .success{color:#9fe2b7}
 :focus-visible{outline:2px solid #e7a9c8;outline-offset:2px}
+.wrap{position:relative;z-index:1}
+.bubbles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.bubble{position:absolute;bottom:-60px;padding:.45em .9em;border-radius:999px;white-space:nowrap;opacity:0;
+  animation:floatUp linear forwards;will-change:transform,opacity;backdrop-filter:blur(2px)}
+.bubble.pink{background:#f1b4d21f;border:1px solid #f1b4d235;color:#f1c2dc}
+.bubble.teal{background:#5fb8c41c;border:1px solid #5fb8c433;color:#9fd8e0}
+@keyframes floatUp{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.85}
+  75%{opacity:.5}
+  100%{transform:translate3d(var(--drift),-115vh,0);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){.bubbles{display:none}}
 @media(max-width:750px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}.hero{padding-top:48px}.meta{display:block}.date{margin-top:4px}}
 @media(max-width:470px){.card{border-radius:17px}.panel{padding:19px}}
 </style>
 </head>
 <body>
+<div class="bubbles" id="bubbles" aria-hidden="true"></div>
 <main class="wrap">
   <section class="hero">
     <div class="eyebrow">a little place for us</div>
@@ -317,6 +331,75 @@ uploadBtn.addEventListener("click", async () => {
     updateUploadBtn();
   }
 });
+
+// ============================================================
+// FLOATING TEXT BUBBLES (edit this list to add your own words)
+// ============================================================
+const BUBBLE_WORDS = [
+  "ninaaa", "ficchi", "fiqie",
+  "eepy", "sleepy", "sleeping", "wadafak", "doodoo", "sorryyy",
+  "cuteee", "babyyy", "dreammm", "someday", "tomorrow", "future",
+  "sweet", "love", "happy", "laugh", "care", "secret", "bday",
+  "woowowoww", "alrightyyy", "byeyeyeyeyeye"
+];
+// these show up a bit more often each round
+const FAVORITE_WORDS = [
+  "gooodddddnightttt", "gooood morningggg", "i love you", "tite"
+];
+const FAVORITE_TIMES = 3;
+const bubbleLayer = $("bubbles");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const MAX_BUBBLES = 14;
+const TIMES_PER_ROUND = 2; // how many times each word shows before the round resets
+
+let wordBag = [];
+let lastWord = null;
+
+function refillBag() {
+  wordBag = [];
+  for (let i = 0; i < TIMES_PER_ROUND; i++) wordBag.push(...BUBBLE_WORDS);
+  for (let i = 0; i < FAVORITE_TIMES; i++) wordBag.push(...FAVORITE_WORDS);
+  // shuffle (Fisher-Yates)
+  for (let i = wordBag.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [wordBag[i], wordBag[j]] = [wordBag[j], wordBag[i]];
+  }
+  // avoid the same word appearing twice in a row
+  for (let i = 1; i < wordBag.length; i++) {
+    if (wordBag[i] === wordBag[i - 1]) {
+      const j = (i + 1) % wordBag.length;
+      [wordBag[i], wordBag[j]] = [wordBag[j], wordBag[i]];
+    }
+  }
+  if (wordBag[wordBag.length - 1] === lastWord) wordBag.unshift(wordBag.pop());
+}
+
+function nextWord() {
+  if (!wordBag.length) refillBag();
+  lastWord = wordBag.pop();
+  return lastWord;
+}
+
+function spawnBubble(preRoll = false) {
+  if (bubbleLayer.childElementCount >= MAX_BUBBLES) return;
+  const b = document.createElement("div");
+  const dur = 9 + Math.random() * 8; // seconds
+  b.className = "bubble " + (Math.random() < 0.5 ? "pink" : "teal");
+  b.textContent = nextWord();
+  b.style.left = (Math.random() * 82 + 3) + "%";
+  b.style.fontSize = (0.8 + Math.random() * 0.5).toFixed(2) + "rem";
+  b.style.setProperty("--drift", (Math.random() * 90 - 45).toFixed(0) + "px");
+  b.style.animationDuration = dur.toFixed(1) + "s";
+  // pre-rolled bubbles start mid-flight so the screen isn't empty on load
+  if (preRoll) b.style.animationDelay = "-" + (Math.random() * dur * 0.7).toFixed(1) + "s";
+  b.addEventListener("animationend", () => b.remove());
+  bubbleLayer.append(b);
+}
+
+if (!reduceMotion) {
+  for (let i = 0; i < 6; i++) spawnBubble(true);
+  setInterval(() => { if (!document.hidden) spawnBubble(); }, 1200);
+}
 
 // ============================================================
 // LOAD SUPABASE LAST, so a CDN failure only affects the backend
