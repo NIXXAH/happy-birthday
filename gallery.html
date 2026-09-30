@@ -59,6 +59,7 @@ if (!window.supabase) {
   document.getElementById("status").textContent = "Supabase library failed to load. Please refresh the page.";
 } 
 
+// DECLARE ONCE[cite: 2]
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const gallery = document.getElementById("gallery");
@@ -141,11 +142,10 @@ function resetModal(){
   document.querySelectorAll(".choice").forEach(b => b.classList.remove("selected"));
 }
 
-// Open modal button fix
-document.getElementById("addBtn").addEventListener("click", function () {
+document.getElementById("addBtn").onclick = function () {
     resetModal();
     modal.classList.add("show");
-});
+};
   
 document.getElementById("cancel").onclick = () => { 
   modal.classList.remove("show"); 
@@ -161,7 +161,6 @@ document.querySelectorAll(".choice").forEach(btn => {
   };
 });
 
-// Clean File Picker Trigger
 document.getElementById("drop").onclick = () => fileInput.click();
 
 fileInput.onchange = () => {
