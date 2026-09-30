@@ -6,6 +6,40 @@
 <title>For Niña ♡</title>
 
 <style>
+
+   .gallery-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    padding: 12px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s ease;
+      }
+      
+      .gallery-button span {
+          color: #ff9fca;
+          font-size: 18px;
+          transition: 0.3s ease;
+      }
+      
+      .gallery-button:hover {
+          background: rgba(255, 255, 255, 0.11);
+          border-color: rgba(255, 159, 202, 0.35);
+          transform: translateY(-2px);
+      }
+      
+      .gallery-button:hover span {
+          transform: scale(1.15);
+      }
+   
     * {
         box-sizing: border-box;
         margin: 0;
@@ -347,7 +381,9 @@
             Niña ♡
         </h2>
 
-       <a href="gallery.html">♡ Our Gallery</a>
+       <a href="gallery.html" class="gallery-button">
+          <span>♡</span> Our Little Gallery
+       </a><br>
 
         <p>
             I hope this little page<br>
