@@ -107,12 +107,10 @@ function resetModal(){
   document.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"));
 }
 
-document.getElementById("addBtn").onclick=()=>{
-  // Open the UI immediately. Supabase authentication is only needed
-  // when the user actually uploads the photo.
-  resetModal();
-  modal.classList.add("show");
+document.getElementById("addBtn").onclick = () => {
+    modal.classList.add("show");
 };
+  
 document.getElementById("cancel").onclick=()=>{modal.classList.remove("show");resetModal()};
 document.querySelectorAll(".choice").forEach(btn=>btn.onclick=()=>{selectedWho=btn.dataset.who;document.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"));btn.classList.add("selected");uploadBtn.disabled=!(selectedWho&&selectedFile)});
 document.getElementById("drop").onclick=e=>{if(e.target!==fileInput)fileInput.click()};
