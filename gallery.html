@@ -50,7 +50,17 @@ const SUPABASE_URL = "https://lhcbytddvbkpeixrclzj.supabase.co";
 const SUPABASE_KEY = "sb_publishable_8tLhbZBnory-M8495pwKkQ_5wHdXNH1";
 
 const BUCKET = "our-gallery";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+if (!window.supabase) {
+  console.error("Supabase library failed to load.");
+  document.getElementById("status").textContent =
+    "Supabase library failed to load. Please refresh the page.";
+} 
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 const gallery = document.getElementById("gallery");
 const status = document.getElementById("status");
@@ -107,7 +117,8 @@ function resetModal(){
   document.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"));
 }
 
-document.getElementById("addBtn").onclick = () => {
+document.getElementById("addBtn").onclick = function () {
+    resetModal();
     modal.classList.add("show");
 };
   
@@ -143,8 +154,7 @@ document.getElementById("lightClose").onclick=()=>document.getElementById("light
 document.getElementById("lightbox").onclick=e=>{if(e.target.id==="lightbox")e.currentTarget.classList.remove("show")};
 
 (async()=>{
-  const ok=await ensureAnonymousSession();
-  if(ok) await loadGallery();
+  await loadGallery();
 })();
 </script>
 </body>
